@@ -2,56 +2,34 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>video pleer</title>
+		<title>video player</title>
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<div class="master-video-container">
-			<video width="100%" height="100%" preload="metadata" loop id="video-master">
-				<source src="img/trailer.mp4" type="video/mp4" codecs="vp8, vorbis">
-			</video>
-		</div>
-		<!-- /.master-video-container -->
+
+
+<ol class="rounded">
+  <li><a href="#">S - stop</a></li>
+  <li><a href="#">D - middle screen</a></li>
+  <li><a href="#">F - full screen</a></li>
+  <li><a href="#">X - speed down</a></li>
+  <li><a href="#">C - speed up</a></li>
+  <li><a href="#">M - volume on/off</a></li>
+  <li><a href="#">esc - exi full/middle screen</a></li>
+  <li><a href="#">space - play/pause</a></li>
+  <li><a href="#">num 0-9 - rewind percent</a></li>
+  <li><a href="#">&#8592 and &#8594 rewind -10/+10 sec</a></li>
+  <li><a href="#">&#8593 and &#8595 volume +10%/-10%</a></li>
+  <li><a href="#">one click play/pause</a></li>
+  <li><a href="#">dbl click center - full screen</a></li>
+  <li><a href="#">dbl click on the edges - rewind +10/-10 sec</a></li>
+</ol>
+
+		<video width="100%" height="100%" preload="metadata" loop class="video-master">
+			<source src="img/trailer.mp4" type="video/mp4" codecs="vp8, vorbis">
+		</video>
+
 	</body>
 	<script src="js/script.js"></script>
 </html>
-
-<!-- 
-		<div id="overlay"></div>
-		<div class="chips-field-left overlay-chips noselect" data-chip-side="left" data-rewind="-10"></div>
-		<div class="chips-field-right overlay-chips noselect" data-chip-side="right" data-rewind="+10"></div>
-		<div class="video-controls noselect master-pause master-volume-on chips-side-left" id="video-controls">
-			<div class="master-stop-container"><span id="master-stop"></span></div>
-			<div class="master-play-container"><span id="master-play-pause"></span></div>
-			<div class="master-dec-container"><span id="master-current-dec" class="master-rewind" data-chip-side="left" data-rewind="-10"></span></div>
-			<div class="bar-container noselect">
-				<progress id="video-progress" max="100" value="0"></progress>
-				<div class="progress-value-container noselect"><span class="progress-value"></span></div>
-			</div>
-			<div class="master-inc-container"><span id="master-current-inc" class="master-rewind" data-chip-side="right" data-rewind="+10"></span></div>
-			<div class="master-time-container">
-				<span id="current-time">0:00</span>
-				<span> / </span>
-				<span id="full-time">0:00</span>
-			</div>						
-			<div class="speed-options-container noselect">
-				<ul class="speed-options noselect">
-					<li data-speed="4" class="center master-speed noselect">x4</li>
-					<li data-speed="2" class="center master-speed noselect">x2</li>
-					<li data-speed="1" class="center master-speed noselect">x1</li>
-					<li data-speed="0.75" class="center master-speed noselect">0.75</li>
-					<li data-speed="0.5" class="center master-speed noselect">0.5</li>
-					<li data-speed="0.25" class="center master-speed noselect">0.25</li>
-				</ul>
-				<div id="current-speed" class="noselect">x1</div>
-			</div>
-			<div class="volume-options-container noselect">
-				<div class="master-volume-range noselect">
-					<input id="master-volume" type="range" min="0" max="100" value="30" step="1">
-				</div>
-				<div id="volume-on-off" class="noselect"></div>
-			</div>
-			<div class="master-maximaze-video"><span id="master-maximaze-video"></span></div>
-		</div>
- -->		<!-- /.video-controls -->	
