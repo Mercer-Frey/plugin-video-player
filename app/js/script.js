@@ -219,20 +219,23 @@ function videoMaster(){
 			iconVolumeOff();
 		}
 	}
-
+	var rememberVolume;
 	function switchVolume(){
 		showControls();
 		if(masterVideoControls.classList.contains('master-volume-on')){
 			iconVolumeOff();
-			volumeVideoCurrent = video.volume;
-			currentVolumeKey =  video.volume;
+			rememberVolume = video.volume;
 			masterVolumeInput.value = 0;
 			video.volume = 0;
+			volumeVideoCurrent = 0;
+			currentVolumeKey =  0;
 			masterRangeValue.style.bottom = 24 + "px";
 			masterRangeValue.innerHTML = 0;
 		}else{
-			masterVolumeInput.value = volumeVideoCurrent * 100;
-			video.volume = volumeVideoCurrent;
+			masterVolumeInput.value = rememberVolume * 100;
+			video.volume = rememberVolume;
+			volumeVideoCurrent = rememberVolume;
+			currentVolumeKey =  rememberVolume;			
 			masterRangeValue.style.bottom = ((60/100)*(volumeVideoCurrent *100)) + 24 + "px";
 			masterRangeValue.innerHTML = Math.round((volumeVideoCurrent*100));
 			iconVolumeOn();
@@ -245,6 +248,7 @@ function videoMaster(){
 			let parrentWidth = e.explicitOriginalTarget.offsetWidth;
 			let currentVolumeClick = e.layerX / parrentWidth * 100;
 			volumeVideoCurrent = currentVolumeClick;
+			rememberVolume = currentVolumeClick / 100;
 			currentVolumeKey = currentVolumeClick / 100;
 			masterVolumeInput.value = currentVolumeClick;
 			video.volume = volumeVideoCurrent / 100;
@@ -311,6 +315,7 @@ function videoMaster(){
 		}
 		video.volume = +currentVolumeKey;
 		volumeVideoCurrent = +currentVolumeKey;
+		rememberVolume = +currentVolumeKey;
 		masterVolumeInput.value = video.volume * 100;
 		masterRangeValue.style.bottom = ((60/100)*(video.volume *100)) + 24 + "px";
 		masterRangeValue.innerHTML = +Math.round((video.volume * 100));
