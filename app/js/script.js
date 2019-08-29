@@ -1,22 +1,18 @@
 ;(function(){
 
-let htmlControls = '<div id="overlay"></div><div id="mouse-hide"></div><div class="volume-value-container noselect"></div><div class="volume-icon-container noselect"></div><div class="chips-field-left overlay-chips noselect" data-chip-side="left" data-rewind="-10"></div><div class="chips-field-right overlay-chips noselect" data-chip-side="right" data-rewind="+10"></div><div class="video-controls noselect master-pause master-volume-on chips-side-left" id="video-controls"> <div class="master-stop-container"><span id="master-stop"></span></div> <div class="master-play-container"><span id="master-play-pause"></span></div> <div class="master-dec-container"><span id="master-current-dec" class="master-rewind" data-chip-side="left" data-rewind="-10"></span></div> <div class="bar-container noselect"> <input type="range" id="video-progress" max="10000" value="0"> </div> <div class="master-inc-container"><span id="master-current-inc" class="master-rewind" data-chip-side="right" data-rewind="+10"></span></div> <div class="master-time-container"><span id="current-time">0:00</span><span> / </span><span id="full-time">0:00</span></div> <div class="speed-options-container noselect"> <ul class="speed-options noselect"> <li data-speed="4" data-speed-number="2" class="center master-speed noselect">x4</li> <li data-speed="2" data-speed-number="1" class="center master-speed noselect">x2</li> <li data-speed="1" data-speed-number="0" class="center master-speed active-speed noselect">x1</li> <li data-speed="0.75" data-speed-number="-1" class="center master-speed noselect">0.75</li> <li data-speed="0.5" data-speed-number="-2" class="center master-speed noselect">0.5</li> <li data-speed="0.25" data-speed-number="-3" class="center master-speed noselect">0.25</li> </ul> <div id="current-speed" class="noselect">x1</div> </div> <div class="volume-options-container noselect"> <div class="master-volume-range noselect"> <input id="master-volume" type="range" min="0" max="100" value="100" step="1"> </div> <div class="volume-range">100</div> <div id="volume-on-off" class="noselect"></div> </div> <div class="master-middle-video"><span id="master-middle-video"></span></div> <div class="master-maximaze-video"><span id="master-maximaze-video"></span></div></div>';
+let htmlControls = '<div id="overlay"></div><div id="mouse-hide"></div><div class="volume-value-container"></div><div class="volume-icon-container"></div><div class="chips-field-left overlay-chips noselect" data-chip-side="left" data-rewind="-10"></div><div class="chips-field-right overlay-chips noselect" data-chip-side="right" data-rewind="+10"></div><div class="video-controls noselect master-pause master-volume-on chips-side-left" id="video-controls"> <div class="master-stop-container"><span id="master-stop"></span></div> <div class="master-play-container"><span id="master-play-pause"></span></div> <div class="master-dec-container"><span id="master-current-dec" class="master-rewind" data-chip-side="left" data-rewind="-10"></span></div> <div class="bar-container noselect"> <input type="range" id="video-progress" max="10000" value="0"> </div> <div class="master-inc-container"><span id="master-current-inc" class="master-rewind" data-chip-side="right" data-rewind="+10"></span></div> <div class="master-time-container"><span id="current-time">0:00</span><span> / </span><span id="full-time">0:00</span></div> <div class="speed-options-container noselect"> <ul class="speed-options noselect"> <li data-speed="4" data-speed-number="2" class="center master-speed noselect">x4</li> <li data-speed="2" data-speed-number="1" class="center master-speed noselect">x2</li> <li data-speed="1" data-speed-number="0" class="center master-speed active-speed noselect">x1</li> <li data-speed="0.75" data-speed-number="-1" class="center master-speed noselect">0.75</li> <li data-speed="0.5" data-speed-number="-2" class="center master-speed noselect">0.5</li> <li data-speed="0.25" data-speed-number="-3" class="center master-speed noselect">0.25</li> </ul> <div id="current-speed" class="noselect">x1</div> </div> <div class="volume-options-container noselect"> <div class="master-volume-range noselect"> <input id="master-volume" type="range" min="0" max="100" value="100" step="1"> </div> <div class="volume-range">100</div> <div id="volume-on-off" class="noselect"></div> </div> <div class="master-middle-video"><span id="master-middle-video"></span></div> <div class="master-maximaze-video"><span id="master-maximaze-video"></span></div></div>';
 
 var videos = document.getElementsByTagName('video');
-for(var i=0; i<videos.length;i++){
-	if(!document.querySelector('.master-video-container')){
-		if( videos[i].classList.contains('video-master')){
-			var wrapper = document.createElement('div');
-			wrapper.classList.add('master-video-container');
-			wrapper.setAttribute('tabindex', [i]);
-			wrapper.innerHTML = videos[i].outerHTML;
-			wrapper.insertAdjacentHTML('beforeend', htmlControls);
-			videos[i].parentNode.replaceChild(wrapper,videos[i]);
-			videos[i].onmousemove = videoMaster();
-		}
-	}
-}
-
+for(var i=0; i<videos.length;i++)
+  if( videos[i].classList.contains('video-master')){
+    var wrapper = document.createElement('div');
+    wrapper.classList.add('master-video-container');
+    wrapper.setAttribute('tabindex', [i]);
+    wrapper.innerHTML = videos[i].outerHTML;
+    wrapper.insertAdjacentHTML('beforeend', htmlControls);
+    videos[i].parentNode.replaceChild(wrapper,videos[i]);
+    videos[i].onmousemove = videoMaster();
+  }
 
 function videoMaster(){
 	let video 						= document.querySelector('video');
@@ -45,6 +41,7 @@ function videoMaster(){
 
 	video.ontimeupdate = progressUpdate;
 	videoContainer.onclick = showControls;
+	videoContainer.onwheel = wheelVolume;
 	videoContainer.onmousemove = showControls;
 	videoContainer.onmouseenter = activeKeylistener;
 	videoContainer.onmouseleave = showControls;
@@ -150,7 +147,6 @@ function videoMaster(){
 		var parrentWidth = w;
 	}
 	function onInputUpdate(e){
-		console.log(this.value);
 		masterOverlay.style.backgroundImage = "none";
 		masterPlayPause.style.backgroundImage = "url(img/video/pause.svg)";
 		var inp = this.value / 100 ;
@@ -262,6 +258,11 @@ function videoMaster(){
 		else{
 			iconVolumeOff();
 		}
+	}
+	function wheelVolume(e) {
+		e.preventDefault();
+		if (e.deltaY > 0) {changeVolumeKey(-5);addVolumeKeySign("value", "icon", 400);}
+		if (e.deltaY < 0) {changeVolumeKey(5);addVolumeKeySign("value", "icon", 400);}
 	}
     var valueOverlayColorTimer;
     var iconOverlayColorTimer;
@@ -410,10 +411,10 @@ function videoMaster(){
 		showControls();
 		if (!videoContainer.classList.contains("middle-screen")) {
 		    videoContainer.classList.add("middle-screen");
-		    videoContainer.classList.add("video-middle-screen");
+		    video.classList.add("video-middle-screen");
 		}else{
 		    videoContainer.classList.remove("middle-screen");
-		    videoContainer.classList.remove("video-middle-screen");
+		    video.classList.remove("video-middle-screen");
 		}
 	};
 	function fullScreen(){
@@ -448,10 +449,10 @@ function videoMaster(){
 	function escScreenSwitch(){
 		videoContainer.classList.add("middle-screen");
 		videoContainer.classList.add("fullscreen");
-		videoContainer.classList.add("video-middle-screen");
+		video.classList.add("video-middle-screen");
 		videoContainer.classList.remove("fullscreen");
 		videoContainer.classList.remove("middle-screen");
-		videoContainer.classList.remove("video-middle-screen");
+		video.classList.remove("video-middle-screen");
 	}
 	function activeKeylistener(){
 		this.focus();
@@ -459,7 +460,6 @@ function videoMaster(){
 	}
 
 	function disabledKeylistener(){
-		console.log('disabled', this);
 		videoContainer.onkeydown = null;
 		this.blur();
 	}
